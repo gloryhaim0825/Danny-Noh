@@ -27,6 +27,18 @@
 </head>
 <body>
 
+  <!-- Top Announcement Banner -->
+  <div class="announcement-banner" style="background: linear-gradient(90deg, #0284C7, #0369A1); color: #fff; padding: 0.55rem 1rem; text-align: center; font-size: 0.875rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; z-index: 1001;">
+    <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <span style="background: #F59E0B; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 9999px;">NEW</span>
+      <span>2026년 8월 필리핀 바기오 선교 기도편지 웹사이트가 오픈되었습니다!</span>
+      <a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" style="background: #ffffff; color: #0284C7; padding: 0.35rem 0.85rem; border-radius: 9999px; font-weight: 700; text-decoration: none; font-size: 0.825rem; display: inline-flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+        <span>8월 기도편지 열기</span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <nav class="navbar" id="navbar">
     <div class="container">
@@ -40,15 +52,12 @@
         <li><a href="#ministry" class="nav-link">CCC 사역비전</a></li>
         <li><a href="#gallery" class="nav-link">사역 갤러리</a></li>
         <li><a href="#prayer-letters" class="nav-link">기도편지</a></li>
+        <li><a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" class="nav-link" style="color: #0284C7; font-weight: 700; display: inline-flex; align-items: center; gap: 0.3rem;"><i class="fa-solid fa-paper-plane"></i> 8월 기도편지 ↗</a></li>
         <li><a href="#support" class="nav-link">후원 안내</a></li>
         <li><a href="#guestbook" class="nav-link">중보기도의 끈</a></li>
       </ul>
 
       <div class="nav-actions">
-        <button id="btn-admin-trigger" class="btn-admin">
-          <i class="fa-solid fa-right-to-bracket"></i>
-          <span id="admin-status-text">동역자 로그인</span>
-        </button>
         <a href="#support" class="btn-cta">
           <i class="fa-solid fa-hand-holding-heart"></i>
           <span>기도 후원하기</span>
@@ -88,9 +97,13 @@
         </p>
 
         <div class="hero-btns">
-          <a href="#prayer-letters" class="btn-primary">
+          <a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: linear-gradient(135deg, #0284C7, #0369A1); box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>2026년 8월 기도편지 보기 ↗</span>
+          </a>
+          <a href="#prayer-letters" class="btn-outline">
             <i class="fa-solid fa-envelope-open-text"></i>
-            <span>최신 기도편지 읽기</span>
+            <span>기도편지 목록</span>
           </a>
           <a href="#support" class="btn-outline">
             <i class="fa-solid fa-heart"></i>
@@ -370,8 +383,37 @@
       </div>
 
       <div class="prayer-grid" id="prayer-grid">
-        <!-- 2026 March Prayer Letter Card (Hardcoded Primary Card) -->
-        <div class="prayer-card" style="border: 2px solid var(--primary-500); box-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);">
+        <!-- 2026 August Prayer Letter Card (Newest Featured Card) -->
+        <div class="prayer-card" style="border: 2px solid var(--primary-500); box-shadow: 0 10px 30px rgba(2, 132, 199, 0.2); grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.5fr; gap: 1.5rem; align-items: center; background: linear-gradient(135deg, #ffffff, var(--primary-50));">
+          <div class="prayer-img-wrap" style="height: 100%; min-height: 240px;">
+            <img src="images/august_family_2026.jpg" alt="[2026.08] 2026년 8월 노대영·신영화 선교사 가정 기도편지 소식" style="width: 100%; height: 100%; object-fit: cover;">
+            <span class="prayer-badge" style="background: #0284C7; color: #fff; font-size: 0.85rem; padding: 0.4rem 0.8rem;">★ 최신 8월호 기도편지</span>
+          </div>
+          <div class="prayer-card-body" style="padding: 1.5rem 1.5rem 1.5rem 0;">
+            <div class="prayer-date" style="color: var(--primary-600); font-weight: 700;"><i class="fa-regular fa-calendar"></i> 2026.08.05 (최신 소식)</div>
+            <h3 class="prayer-card-title" style="font-size: 1.35rem; margin-bottom: 0.75rem;">[2026.08] 2026년 8월 필리핀 바기오 선교 기도편지 소식</h3>
+            <p class="prayer-summary" style="font-size: 1rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--slate-700);">
+              "바기오 이 산지를 내게 주소서!" 8월 필리핀 바기오 현지 개척 사역 및 대학생 순모임 개척, 4영리 캠퍼스 전도 소식과 기도의 동역 요청입니다.
+            </p>
+            <div class="prayer-card-footer" style="border: none; padding: 0; justify-content: flex-start; gap: 0.75rem; flex-wrap: wrap;">
+              <a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.95rem; padding: 0.7rem 1.5rem; background: linear-gradient(135deg, #0284C7, #0369A1); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>2026년 8월 기도편지 사이트 열기 ↗</span>
+              </a>
+              <button id="btn-read-august-featured" class="btn-outline" style="font-size: 0.9rem; padding: 0.65rem 1.25rem; cursor: pointer;">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>요약 본문 보기</span>
+              </button>
+              <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-outline" style="font-size: 0.9rem; padding: 0.65rem 1.25rem; text-decoration: none; color: #03CF5D; border-color: #03CF5D;">
+                <i class="fa-solid fa-square-arrow-up-right"></i>
+                <span>네이버 블로그</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2026 March Prayer Letter Card -->
+        <div class="prayer-card">
           <div class="prayer-img-wrap">
             <img src="images/evangelism1.jpg" alt="[2026.03] 2026년 3월 CCC 선교 기도편지 소식">
             <span class="prayer-badge" style="background: #03CF5D; color: #fff;">네이버 블로그 기도편지</span>
@@ -381,9 +423,9 @@
             <h3 class="prayer-card-title">[2026.03] 2026년 3월 CCC 선교 기도편지 소식</h3>
             <p class="prayer-summary">2026년 3월 노대영·신영화 선교사의 사역 이야기와 바기오 사역 비전, 기도제목이 담긴 네이버 블로그 기도편지 소식입니다.</p>
             <div class="prayer-card-footer">
-              <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.9rem; padding: 0.6rem 1.25rem; text-decoration: none; background: #03CF5D;">
+              <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem; text-decoration: none; background: #03CF5D;">
                 <i class="fa-solid fa-square-arrow-up-right"></i>
-                <span>2026년 3월 기도편지 열기</span>
+                <span>3월 기도편지 열기</span>
               </a>
             </div>
           </div>
@@ -602,6 +644,7 @@
         <div>
           <h4 class="footer-title">빠른 이동</h4>
           <ul class="footer-links">
+            <li><a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" style="color: #0284C7; font-weight: 700;">2026년 8월 기도편지 ↗</a></li>
             <li><a href="#profile">선교사 이력</a></li>
             <li><a href="#ministry">CCC 사역소개</a></li>
             <li><a href="#gallery">사역 갤러리</a></li>
@@ -629,41 +672,16 @@
 
   <!-- MODALS -->
 
-  <!-- 1. Partner / Missionary Login Modal (동역자 및 선교사 로그인) -->
+  <!-- 1. Missionary Admin Login Modal (선교사 관리자 로그인) -->
   <div class="modal-backdrop" id="modal-admin-auth">
     <div class="modal-box" style="max-width: 440px;">
       <div class="modal-header">
-        <h3 class="modal-title"><i class="fa-solid fa-right-to-bracket text-primary"></i> 동역자 & 선교사 로그인</h3>
+        <h3 class="modal-title"><i class="fa-solid fa-user-lock text-primary"></i> 선교사 관리자 로그인</h3>
         <button class="btn-close-modal" class="modal-close-trigger"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        <!-- Tab Selector -->
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; background: var(--slate-100); padding: 0.25rem; border-radius: var(--radius-md);">
-          <button type="button" id="tab-login-partner" style="flex: 1; padding: 0.6rem; font-weight: 700; border-radius: var(--radius-sm); background: #fff; color: var(--navy-900); box-shadow: 0 2px 5px rgba(0,0,0,0.05);">동역자 로그인</button>
-          <button type="button" id="tab-login-missionary" style="flex: 1; padding: 0.6rem; font-weight: 700; border-radius: var(--radius-sm); color: var(--slate-600);">선교사 관리자</button>
-        </div>
-
-        <!-- Partner Login Form -->
-        <form id="partner-login-form">
-          <p style="font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1rem;">
-            기도제목 나눔 및 동역 활동을 위해 성함과 비밀번호(4자리)를 입력해주세요.
-          </p>
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="partner-name-input">동역자 성함</label>
-            <input type="text" id="partner-name-input" class="form-control" placeholder="성함을 입력하세요 (예: 김순장)" required autocomplete="off">
-          </div>
-          <div class="form-group" style="margin-bottom: 1.25rem;">
-            <label for="partner-pw-input">비밀번호 (자유 4자리)</label>
-            <input type="password" id="partner-pw-input" class="form-control" placeholder="••••" required autocomplete="off">
-          </div>
-          <button type="submit" class="btn-primary" style="width: 100%;">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i>
-            <span>동역자로 로그인하기</span>
-          </button>
-        </form>
-
-        <!-- Missionary Admin Form (Hidden by default) -->
-        <form id="admin-pin-form" style="display: none;">
+        <!-- Missionary Admin Form -->
+        <form id="admin-pin-form">
           <p style="font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1rem;">
             기도편지 작성/수정 및 사역 관리를 위해 선교사 PIN을 입력해주세요.<br>
             <small style="color: var(--gold-600);">(기본 PIN: 간사번호 <strong>4708</strong>)</small>
