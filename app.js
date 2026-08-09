@@ -2,9 +2,55 @@
    CCC 노대영 · 신영화 선교사 사역 웹사이트 - App JavaScript (Cloud Sync & Admin Dashboard)
    ========================================================================== */
 
+// --- Global Fallback Helper for Missionary Login ---
+// Defined at top level so inline onclick="openAdminAuthModal(event)" works immediately
+window.openAdminAuthModal = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  if (e && e.stopPropagation) e.stopPropagation();
+
+  // Close mobile nav drawer if open
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks) navLinks.classList.remove('active');
+
+  let isAdmin = false;
+  try {
+    isAdmin = sessionStorage.getItem('ccc_noh_is_admin') === 'true';
+  } catch (err) {
+    console.warn('sessionStorage check failed:', err);
+  }
+
+  const modalAdminAuth = document.getElementById('modal-admin-auth');
+  const modalAdminDashboard = document.getElementById('modal-admin-dashboard');
+
+  if (isAdmin) {
+    if (typeof fetchCloudData === 'function') fetchCloudData();
+    if (typeof renderAdminDashboard === 'function') renderAdminDashboard();
+    if (modalAdminDashboard) {
+      modalAdminDashboard.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  } else {
+    if (modalAdminAuth) {
+      modalAdminAuth.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const pinInput = document.getElementById('admin-pin-input');
+        if (pinInput) pinInput.focus();
+      }, 100);
+    }
+  }
+};
+
+// Listen for direct URL hash link like https://danny-noh-3nwk.vercel.app/#admin-login
+window.addEventListener('hashchange', () => {
+  if (window.location.hash === '#admin-login' || window.location.hash === '#modal-admin-auth') {
+    window.openAdminAuthModal();
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
-  const CLOUD_DB_URL = 'https://jsonblob.com/api/jsonBlob/019fe454-24f9-7ee6-be26-3bf51bb9592a';
+  const CLOUD_DB_URL = 'https://jsonblob.com/api/jsonBlob/019fe59c-a71a-7d39-9fbf-49c0c54ced9c';
 
   // Default initial prayer letters
   const defaultLetters = [
@@ -74,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // Default guestbook / prayer thread messages
   const defaultGuestbook = [
     { id: 'guest-1', name: '김순장', affiliation: '경희CCC 동문', msg: '노대영 선교사님! 바기오 사역과 제자화 사역을 위해 매일 기도합니다. 가정을 위해 기도제목 나눕니다: 저희 가정의 대학 입시와 건강을 위해 함께 기도해 주세요.', time: '방금 전' },
     { id: 'guest-2', name: '박은혜 집사', affiliation: '기도 동역자', msg: '선교사님 가정을 위해 늘 중보기도합니다. 저희 교구 식구들의 영적 성장과 건강을 위해 기도의 끈으로 함께해 주세요 🙏', time: '1시간 전' },
@@ -85,13 +130,47 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'commit-1', name: '홍길동 성도', contact: '010-1234-5678', msg: '바기오 사역과 선교사 가정을 위해 매일 기도로 동역하겠습니다!', time: '2026.08.08' }
   ];
 
-  // --- LocalStorage & Cloud State ---
-  localStorage.setItem('ccc_noh_letters', JSON.stringify(defaultLetters));
+  // --- Safe Storage Helper (prevents iOS/Safari Private Browsing DOMException) ---
+  function getSafeItem(type, key) {
+    try {
+      const storage = type === 'session' ? sessionStorage : localStorage;
+      return storage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setSafeItem(type, key, val) {
+    try {
+      const storage = type === 'session' ? sessionStorage : localStorage;
+      storage.setItem(key, val);
+    } catch (e) {}
+  }
+
+  function removeSafeItem(type, key) {
+    try {
+      const storage = type === 'session' ? sessionStorage : localStorage;
+      storage.removeItem(key);
+    } catch (e) {}
+  }
+
+  // --- State Initialization ---
+  setSafeItem('local', 'ccc_noh_letters', JSON.stringify(defaultLetters));
   let letters = defaultLetters;
 
-  let guestbook = JSON.parse(localStorage.getItem('ccc_noh_guestbook')) || defaultGuestbook;
-  let commitments = JSON.parse(localStorage.getItem('ccc_noh_commitments')) || defaultCommitments;
-  let isAdmin = sessionStorage.getItem('ccc_noh_is_admin') === 'true';
+  let guestbook = defaultGuestbook;
+  try {
+    const rawG = getSafeItem('local', 'ccc_noh_guestbook');
+    if (rawG) guestbook = JSON.parse(rawG);
+  } catch (e) {}
+
+  let commitments = defaultCommitments;
+  try {
+    const rawC = getSafeItem('local', 'ccc_noh_commitments');
+    if (rawC) commitments = JSON.parse(rawC);
+  } catch (e) {}
+
+  let isAdmin = getSafeItem('session', 'ccc_noh_is_admin') === 'true';
 
   // --- DOM Elements ---
   const navbar = document.getElementById('navbar');
@@ -113,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const btnAdminTrigger = document.getElementById('btn-admin-trigger');
   const btnAdminDash = document.getElementById('btn-admin-dash');
-  const adminStatusText = document.getElementById('admin-status-text');
 
   // Modals
   const modalAdminAuth = document.getElementById('modal-admin-auth');
@@ -183,11 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
         if (data && Array.isArray(data.guestbook) && data.guestbook.length > 0) {
           guestbook = data.guestbook;
-          localStorage.setItem('ccc_noh_guestbook', JSON.stringify(guestbook));
+          setSafeItem('local', 'ccc_noh_guestbook', JSON.stringify(guestbook));
         }
         if (data && Array.isArray(data.commitments) && data.commitments.length > 0) {
           commitments = data.commitments;
-          localStorage.setItem('ccc_noh_commitments', JSON.stringify(commitments));
+          setSafeItem('local', 'ccc_noh_commitments', JSON.stringify(commitments));
         }
         renderGuestbook();
         renderAdminDashboard();
@@ -198,35 +276,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function syncCloudData() {
-    localStorage.setItem('ccc_noh_guestbook', JSON.stringify(guestbook));
-    localStorage.setItem('ccc_noh_commitments', JSON.stringify(commitments));
     try {
       await fetch(CLOUD_DB_URL, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({ guestbook, commitments })
       });
     } catch (err) {
       console.warn('Cloud DB sync error:', err);
     }
+    setSafeItem('local', 'ccc_noh_guestbook', JSON.stringify(guestbook));
+    setSafeItem('local', 'ccc_noh_commitments', JSON.stringify(commitments));
   }
 
   // Navigation scroll & Mobile menu
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    if (navbar) {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
     }
   });
 
   if (mobileToggle) {
-    mobileToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (navLinks) navLinks.classList.toggle('active');
     });
   }
 
-  // --- Admin UI Toggle ---
+  // --- Admin UI Toggle & Event Listeners ---
   function updateAdminUI() {
     const statusTexts = document.querySelectorAll('.admin-status-text');
     const adminTriggers = document.querySelectorAll('.btn-admin-trigger-el');
@@ -246,23 +327,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.btn-admin-trigger-el').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (navLinks) navLinks.classList.remove('active');
+
       if (isAdmin) {
         if (confirm('선교사 관리자 계정에서 로그아웃 하시겠습니까?')) {
           isAdmin = false;
-          sessionStorage.removeItem('ccc_noh_is_admin');
+          removeSafeItem('session', 'ccc_noh_is_admin');
           updateAdminUI();
           renderPrayerLetters();
           showToast('로그아웃 되었습니다.');
         }
       } else {
-        openModal(modalAdminAuth);
+        window.openAdminAuthModal(e);
       }
     });
   });
 
   document.querySelectorAll('.btn-admin-dash-el').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (navLinks) navLinks.classList.remove('active');
       fetchCloudData();
       renderAdminDashboard();
       openModal(modalAdminDashboard);
@@ -273,13 +361,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (adminPinForm) {
     adminPinForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const pin = adminPinInput.value.trim();
+      const pin = adminPinInput ? adminPinInput.value.trim() : '';
       if (pin === '4708') {
         isAdmin = true;
-        sessionStorage.setItem('ccc_noh_is_admin', 'true');
+        setSafeItem('session', 'ccc_noh_is_admin', 'true');
         updateAdminUI();
         closeModal(modalAdminAuth);
-        adminPinInput.value = '';
+        if (adminPinInput) adminPinInput.value = '';
         renderPrayerLetters();
         fetchCloudData();
         renderAdminDashboard();
@@ -299,8 +387,8 @@ document.addEventListener('DOMContentLoaded', () => {
       tabBtnCommitments.classList.remove('active');
       tabBtnCommitments.style.borderBottom = 'none';
       tabBtnCommitments.style.color = 'var(--slate-500)';
-      tabContentGuestbook.style.display = 'block';
-      tabContentCommitments.style.display = 'none';
+      if (tabContentGuestbook) tabContentGuestbook.style.display = 'block';
+      if (tabContentCommitments) tabContentCommitments.style.display = 'none';
     });
 
     tabBtnCommitments.addEventListener('click', () => {
@@ -310,8 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
       tabBtnGuestbook.classList.remove('active');
       tabBtnGuestbook.style.borderBottom = 'none';
       tabBtnGuestbook.style.color = 'var(--slate-500)';
-      tabContentCommitments.style.display = 'block';
-      tabContentGuestbook.style.display = 'none';
+      if (tabContentCommitments) tabContentCommitments.style.display = 'block';
+      if (tabContentGuestbook) tabContentGuestbook.style.display = 'none';
     });
   }
 
@@ -502,8 +590,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
       el.addEventListener('click', () => {
-        lightboxImg.src = item.img;
-        lightboxCaption.textContent = item.title;
+        if (lightboxImg) lightboxImg.src = item.img;
+        if (lightboxCaption) lightboxCaption.textContent = item.title;
         openModal(modalLightbox);
       });
       galleryGrid.appendChild(el);
@@ -578,16 +666,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Event Listeners for Card
       const btnRead = card.querySelector('.btn-read-more');
-      btnRead.addEventListener('click', () => openLetterDetail(letter.id));
+      if (btnRead) btnRead.addEventListener('click', () => openLetterDetail(letter.id));
 
       const btnPray = card.querySelector('.btn-pray-count');
-      btnPray.addEventListener('click', (e) => {
-        e.stopPropagation();
-        letter.prayCount = (letter.prayCount || 0) + 1;
-        saveLetters();
-        renderPrayerLetters();
-        showToast('아멘! 기도로 함께해 주셔서 감사합니다.');
-      });
+      if (btnPray) {
+        btnPray.addEventListener('click', (e) => {
+          e.stopPropagation();
+          letter.prayCount = (letter.prayCount || 0) + 1;
+          saveLetters();
+          renderPrayerLetters();
+          showToast('아멘! 기도로 함께해 주셔서 감사합니다.');
+        });
+      }
 
       if (isAdmin) {
         const btnEdit = card.querySelector('.btn-edit-letter');
@@ -625,14 +715,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function saveLetters() {
-    localStorage.setItem('ccc_noh_letters', JSON.stringify(letters));
+    setSafeItem('local', 'ccc_noh_letters', JSON.stringify(letters));
   }
 
   // Header Write Button
   if (btnWriteLetterHeader) {
     btnWriteLetterHeader.addEventListener('click', () => {
       if (!isAdmin) {
-        openModal(modalAdminAuth);
+        window.openAdminAuthModal();
         return;
       }
       openCreateLetterModal();
@@ -640,9 +730,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openCreateLetterModal() {
-    editLetterId.value = '';
-    writeModalTitle.innerHTML = '<i class="fa-solid fa-pen-nib text-primary"></i> 새 기도편지 올리기';
-    prayerLetterForm.reset();
+    if (editLetterId) editLetterId.value = '';
+    if (writeModalTitle) writeModalTitle.innerHTML = '<i class="fa-solid fa-pen-nib text-primary"></i> 새 기도편지 올리기';
+    if (prayerLetterForm) prayerLetterForm.reset();
     openModal(modalWriteLetter);
   }
 
@@ -650,14 +740,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const letter = letters.find(l => l.id === id);
     if (!letter) return;
 
-    editLetterId.value = letter.id;
-    writeModalTitle.innerHTML = '<i class="fa-solid fa-pen-to-square text-primary"></i> 기도편지 수정하기';
+    if (editLetterId) editLetterId.value = letter.id;
+    if (writeModalTitle) writeModalTitle.innerHTML = '<i class="fa-solid fa-pen-to-square text-primary"></i> 기도편지 수정하기';
     
-    letterTitleInput.value = letter.title;
-    letterCategorySelect.value = letter.category;
-    letterCoverSelect.value = letter.cover || 'images/dispatch_ceremony.jpg';
-    letterContentInput.value = letter.content;
-    letterRequestsInput.value = Array.isArray(letter.requests) ? letter.requests.join('\n') : letter.requests;
+    if (letterTitleInput) letterTitleInput.value = letter.title;
+    if (letterCategorySelect) letterCategorySelect.value = letter.category;
+    if (letterCoverSelect) letterCoverSelect.value = letter.cover || 'images/dispatch_ceremony.jpg';
+    if (letterContentInput) letterContentInput.value = letter.content;
+    if (letterRequestsInput) letterRequestsInput.value = Array.isArray(letter.requests) ? letter.requests.join('\n') : letter.requests;
 
     openModal(modalWriteLetter);
   }
@@ -666,12 +756,12 @@ document.addEventListener('DOMContentLoaded', () => {
     prayerLetterForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const id = editLetterId.value;
-      const title = letterTitleInput.value.trim();
-      const category = letterCategorySelect.value;
-      const cover = letterCoverSelect.value;
-      const content = letterContentInput.value.trim();
-      const requestsRaw = letterRequestsInput.value.trim();
+      const id = editLetterId ? editLetterId.value : '';
+      const title = letterTitleInput ? letterTitleInput.value.trim() : '';
+      const category = letterCategorySelect ? letterCategorySelect.value : '파송';
+      const cover = letterCoverSelect ? letterCoverSelect.value : 'images/dispatch_ceremony.jpg';
+      const content = letterContentInput ? letterContentInput.value.trim() : '';
+      const requestsRaw = letterRequestsInput ? letterRequestsInput.value.trim() : '';
       const requests = requestsRaw.split('\n').map(r => r.trim()).filter(r => r.length > 0);
 
       const today = new Date();
@@ -719,18 +809,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!letter) return;
     currentActiveLetter = letter;
 
-    readLetterCategory.textContent = letter.category;
-    readLetterTitle.textContent = letter.title;
-    readLetterDate.innerHTML = `<i class="fa-regular fa-calendar"></i> ${letter.date}`;
+    if (readLetterCategory) readLetterCategory.textContent = letter.category;
+    if (readLetterTitle) readLetterTitle.textContent = letter.title;
+    if (readLetterDate) readLetterDate.innerHTML = `<i class="fa-regular fa-calendar"></i> ${letter.date}`;
 
     if (letter.cover) {
-      readLetterCover.src = letter.cover;
-      readLetterCoverWrap.style.display = 'block';
+      if (readLetterCover) readLetterCover.src = letter.cover;
+      if (readLetterCoverWrap) readLetterCoverWrap.style.display = 'block';
     } else {
-      readLetterCoverWrap.style.display = 'none';
+      if (readLetterCoverWrap) readLetterCoverWrap.style.display = 'none';
     }
 
-    readLetterBody.textContent = letter.content;
+    if (readLetterBody) readLetterBody.textContent = letter.content;
 
     // Blog external link button
     const existingBlogBtn = document.getElementById('btn-blog-link');
@@ -762,26 +852,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       blogBtnWrap.innerHTML = btnHTML;
-      readLetterBody.appendChild(blogBtnWrap);
+      if (readLetterBody) readLetterBody.appendChild(blogBtnWrap);
     }
 
     // Requests
-    readLetterRequests.innerHTML = '';
-    if (Array.isArray(letter.requests) && letter.requests.length > 0) {
-      letter.requests.forEach((req, idx) => {
-        const li = document.createElement('li');
-        li.style.marginBottom = '0.6rem';
-        li.style.display = 'flex';
-        li.style.alignItems = 'flex-start';
-        li.style.gap = '0.5rem';
-        li.style.fontSize = '0.95rem';
-        li.style.color = 'var(--slate-700)';
-        li.innerHTML = `<strong style="color: var(--primary-600);">${idx + 1}.</strong> <span>${req}</span>`;
-        readLetterRequests.appendChild(li);
-      });
+    if (readLetterRequests) {
+      readLetterRequests.innerHTML = '';
+      if (Array.isArray(letter.requests) && letter.requests.length > 0) {
+        letter.requests.forEach((req, idx) => {
+          const li = document.createElement('li');
+          li.style.marginBottom = '0.6rem';
+          li.style.display = 'flex';
+          li.style.alignItems = 'flex-start';
+          li.style.gap = '0.5rem';
+          li.style.fontSize = '0.95rem';
+          li.style.color = 'var(--slate-700)';
+          li.innerHTML = `<strong style="color: var(--primary-600);">${idx + 1}.</strong> <span>${req}</span>`;
+          readLetterRequests.appendChild(li);
+        });
+      }
     }
 
-    detailPrayCountVal.textContent = letter.prayCount || 0;
+    if (detailPrayCountVal) detailPrayCountVal.textContent = letter.prayCount || 0;
     openModal(modalReadLetter);
   }
 
@@ -789,7 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDetailPray.addEventListener('click', () => {
       if (!currentActiveLetter) return;
       currentActiveLetter.prayCount = (currentActiveLetter.prayCount || 0) + 1;
-      detailPrayCountVal.textContent = currentActiveLetter.prayCount;
+      if (detailPrayCountVal) detailPrayCountVal.textContent = currentActiveLetter.prayCount;
       saveLetters();
       renderPrayerLetters();
       showToast('아멘! 기도로 동역해 주셔서 감사합니다.');
@@ -810,9 +902,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnQrDetail) {
     btnQrDetail.addEventListener('click', () => {
       if (!currentActiveLetter) return;
-      qrTargetTitle.textContent = currentActiveLetter.title;
-      qrcodeContainer.innerHTML = '';
-      if (window.QRCode) {
+      if (qrTargetTitle) qrTargetTitle.textContent = currentActiveLetter.title;
+      if (qrcodeContainer) qrcodeContainer.innerHTML = '';
+      if (window.QRCode && qrcodeContainer) {
         new QRCode(qrcodeContainer, {
           text: window.location.href,
           width: 180,
@@ -1064,11 +1156,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Modal Helpers ---
   function openModal(modal) {
-    if (modal) modal.classList.add('active');
+    if (!modal) return;
+    if (navLinks) navLinks.classList.remove('active');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeModal(modal) {
-    if (modal) modal.classList.remove('active');
+    if (!modal) return;
+    modal.classList.remove('active');
+    const remainingModal = document.querySelector('.modal-backdrop.active');
+    if (!remainingModal) {
+      document.body.style.overflow = '';
+    }
   }
 
   document.querySelectorAll('.modal-close-trigger').forEach(trigger => {
