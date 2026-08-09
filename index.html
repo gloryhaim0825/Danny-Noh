@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>CCC 노대영 · 신영화 선교사 | 필리핀 바기오 사역 & 기도편지</title>
-  <meta name="description" content="한국대학생선교회(CCC) 노대영 선교사의 사역 소개, 필리핀 바기오 선교 비전, 기도편지 및 후원 안내 플랫폼입니다.">
+  <meta name="description" content="한국대학생선교회(CCC) 노대영 · 신영화 선교사의 사역 소개, 필리핀 바기오 선교 비전, 기도편지 및 후원 안내 플랫폼입니다.">
   
   <!-- OpenGraph / Social Sharing -->
   <meta property="og:type" content="website">
@@ -20,24 +20,23 @@
   <!-- FontAwesome Icons CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- QRCode.js Library CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+  <!-- App Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- Navigation Bar -->
   <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="#hero" class="nav-brand" style="display: flex; align-items: center; padding: 0.25rem 0; gap: 0.75rem; text-decoration: none;">
-        <img src="images/ccc_logo.jpg" alt="CCC Logo - Life Transforming COMMUNITAS" style="height: 44px; width: auto; object-fit: contain; border-radius: 6px;">
-        <div style="display: flex; flex-direction: column;">
-          <span style="font-weight: 800; font-size: 1.05rem; color: var(--navy-900);">노대영 · 신영화 선교사</span>
-          <span style="font-size: 0.75rem; color: var(--primary-600); font-weight: 600;">CCC 필리핀 바기오 선교</span>
+    <div class="container navbar-container">
+      <a href="#hero" class="nav-brand">
+        <img src="images/ccc_logo.jpg" alt="CCC Logo - Life Transforming COMMUNITAS" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-name">노대영 · 신영화 선교사</span>
+          <span class="brand-sub">CCC 필리핀 바기오 선교</span>
         </div>
       </a>
 
+      <!-- Desktop Links -->
       <ul class="nav-links" id="nav-links">
         <li><a href="#hero" class="nav-link active">홈</a></li>
         <li><a href="#profile" class="nav-link">선교사 소개</a></li>
@@ -48,21 +47,64 @@
         <li><a href="#guestbook" class="nav-link">중보기도의 끈</a></li>
       </ul>
 
+      <!-- Navbar Right Actions -->
       <div class="nav-actions">
         <button id="btn-gform-settings" class="btn-gform-badge" title="구글 폼 URL 설정">
-          <i class="fa-solid fa-square-poll-vertical"></i>
-          <span>구글 폼 설정</span>
+          <i class="fa-solid fa-gear"></i>
+          <span class="hide-on-mobile-sm">구글 폼 설정</span>
         </button>
-        <a href="#support" class="btn-cta">
+        <a href="#support" class="btn-cta hide-on-mobile">
           <i class="fa-solid fa-hand-holding-heart"></i>
           <span>기도 후원하기</span>
         </a>
-        <button class="mobile-toggle" id="mobile-toggle">
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="모바일 메뉴 열기">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <div class="mobile-drawer-brand">
+          <img src="images/ccc_logo.jpg" alt="CCC Logo" class="drawer-logo">
+          <div>
+            <div class="drawer-title">노대영 · 신영화 선교사</div>
+            <div class="drawer-subtitle">CCC 필리핀 바기오 선교</div>
+          </div>
+        </div>
+        <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="메뉴 닫기">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="mobile-drawer-body">
+        <ul class="mobile-drawer-links">
+          <li><a href="#hero" class="drawer-link active"><i class="fa-solid fa-house"></i> 홈</a></li>
+          <li><a href="#profile" class="drawer-link"><i class="fa-solid fa-user-check"></i> 선교사 소개</a></li>
+          <li><a href="#ministry" class="drawer-link"><i class="fa-solid fa-earth-americas"></i> CCC 사역비전</a></li>
+          <li><a href="#gallery" class="drawer-link"><i class="fa-solid fa-images"></i> 사역 갤러리</a></li>
+          <li><a href="#prayer-letters" class="drawer-link"><i class="fa-solid fa-envelope-open-text"></i> 선교 기도편지</a></li>
+          <li><a href="#support" class="drawer-link"><i class="fa-solid fa-hand-holding-heart"></i> 후원 안내</a></li>
+          <li><a href="#guestbook" class="drawer-link"><i class="fa-solid fa-hands-praying"></i> 중보기도의 끈</a></li>
+        </ul>
+
+        <div class="mobile-drawer-actions">
+          <button id="btn-gform-settings-drawer" class="btn-gform-purple-full">
+            <i class="fa-solid fa-gear"></i>
+            <span>구글 폼 URL 설정</span>
+          </button>
+          <a href="#support" class="btn-primary-full drawer-cta">
+            <i class="fa-solid fa-heart"></i>
+            <span>기도 후원자 동역하기</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Hero Section -->
   <section class="hero-section" id="hero">
@@ -80,13 +122,13 @@
 
         <div class="hero-slogan-box">
           <div class="hero-slogan-title"><i class="fa-solid fa-quote-left"></i> 사역 비전 슬로건</div>
-          <div class="hero-slogan" style="font-size: 1.45rem; line-height: 1.35; letter-spacing: 0.5px;">
+          <div class="hero-slogan">
             WIN BAGUIO TODAY!<br>
             WIN THE WORLD TOMORROW!
           </div>
         </div>
 
-        <h1 class="hero-name">노대영 · 신영화 <span style="font-size: 0.7em; color: var(--primary-500);">선교사</span></h1>
+        <h1 class="hero-name">노대영 · 신영화 <span class="hero-title-sub">선교사</span></h1>
         <p class="hero-subtitle">
           주님의 지상명령(마태복음 28:19-20)을 잇는 제자 육성 사역! 동아시아 선교를 거쳐 필리핀 바기오 캠퍼스 복음화와 영적 리더 양성을 위해 달려갑니다.
         </p>
@@ -127,19 +169,19 @@
       </div>
 
       <!-- Missionary Testimony & Verse Block -->
-      <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 2.5rem 2rem; margin-bottom: 3.5rem; box-shadow: var(--glass-shadow);">
+      <div class="testimony-wrapper">
         <!-- Bible Verse Box -->
-        <div style="background: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(15, 23, 42, 0.05)); border-left: 4px solid var(--primary-500); padding: 1.5rem 1.75rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
-          <div style="font-size: 1.15rem; font-weight: 700; color: var(--navy-900); line-height: 1.7; word-break: keep-all; margin-bottom: 0.5rem;">
+        <div class="bible-verse-box">
+          <div class="bible-verse-text">
             "믿음이 없이는 하나님을 기쁘시게 못하나니 하나님께 나아가는 자는 반드시 그가 계신 것과 또한 그가 자기를 찾는 자들에게 상 주시는 이심을 믿어야 할찌니라."
           </div>
-          <div style="font-weight: 800; color: var(--primary-700); text-align: right; font-size: 0.95rem;">
+          <div class="bible-verse-ref">
             <i class="fa-solid fa-book-bible"></i> 히브리서 11장 6절
           </div>
         </div>
 
         <!-- Personal Narrative -->
-        <div style="font-size: 1.025rem; color: var(--slate-700); line-height: 1.85; display: flex; flex-direction: column; gap: 1.25rem; word-break: keep-all;">
+        <div class="narrative-text">
           <p>
             대학 1학년 CCC 여름수련회에서 김준곤 목사님의 백문일답 질문과 수많은 청년들의 외침 소리 속에서 주님께 헌신하게 되었습니다. 그 청년 때의 헌신을 잊어버릴 때쯤, 주님은 저를 선교의 발걸음으로 조금씩 인도하셨습니다. 캐나다 STINT의 1년 시간 동안 온 열방을 향하여 선교하시는 하나님을 만날 수 있었으며, 살아있는 말씀의 능력을 경험하기 시작하였습니다. 태평양을 건너간 1년의 영적 모험의 시간은 하나님의 나라를 향한 모험이 얼마나 즐거운 것인지를 맛보게 하였습니다.
           </p>
@@ -149,18 +191,18 @@
           <p>
             2010년 전혀 계획하지도 않았던 동아시아의 땅에, 하나님은 그 땅에 단기선교를 가게 하셨고 저는 15억의 동아시아 대륙을 향한 하나님의 마음에 붙잡혀 선교지로 나아갈 것을 기도하게 되었습니다. 그리고, 겨우겨우 찾았던 내가 가려던 선교지 도시가 아니라, 한 번도 가본 적도 생각해 본 적도 없던 얼음의 땅, H도시에 선교사로 2015년에 나아가도록 인도하셨습니다.
           </p>
-          <p style="background: #fff; padding: 1.25rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--primary-100); color: var(--navy-900); font-weight: 500;">
-            <strong style="color: var(--primary-600); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">"얼음의 땅에도 꽃피는 봄날은 온다!"</strong>
+          <div class="narrative-quote-box">
+            <strong class="quote-heading">"얼음의 땅에도 꽃피는 봄날은 온다!"</strong>
             그 얼음의 땅에서도 복음으로 변화될 그날이 반드시 올 것이라는 소망을 품고 선교사의 첫 걸음을 시작했었습니다. 그리고, 하나님은 이제 제2의 선교지로 아시아 선교의 허브, 필리핀 땅에서 무슬림과 힌두교, 불교와 공산주의로 가득한 아시아 땅을 더욱 품게 하십니다. 산꼭대기 바기오의 지역에서부터 아시아 선교를 넘어, 세계 선교의 허브로 사용되길 바라는 믿음으로 나아갑니다.<br><br>
-            갈렙의 믿음처럼, <strong style="color: var(--gold-600);">"바기오 이 산지를 나에게 주소서"</strong>라는 믿음의 기도를 드립니다. 수많은 청년들이 예수의 꿈을 꾸고, 비전을 꿈꾸며, 다음 세대 선교의 주역들로 세워져 나가길 꿈꿉니다.
-          </p>
+            갈렙의 믿음처럼, <strong class="quote-gold">"바기오 이 산지를 나에게 주소서"</strong>라는 믿음의 기도를 드립니다. 수많은 청년들이 예수의 꿈을 꾸고, 비전을 꿈꾸며, 다음 세대 선교의 주역들로 세워져 나가길 꿈꿉니다.
+          </div>
         </div>
       </div>
 
       <div class="profile-grid">
         <!-- Education Info -->
         <div class="profile-left">
-          <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 1rem;">
+          <h3 class="profile-col-title">
             <i class="fa-solid fa-book-bookmark text-primary"></i> 학력 (Education)
           </h3>
           
@@ -174,7 +216,7 @@
             </div>
 
             <div class="edu-card">
-              <div class="edu-icon" style="background: var(--gold-500);"><i class="fa-solid fa-users-gear"></i></div>
+              <div class="edu-icon edu-icon-gold"><i class="fa-solid fa-users-gear"></i></div>
               <div>
                 <div class="edu-degree">MATL (변혁적 리더십 석사)</div>
                 <div class="edu-school">I.G.S.L (International Graduate School of Leadership)</div>
@@ -182,7 +224,7 @@
             </div>
 
             <div class="edu-card">
-              <div class="edu-icon" style="background: var(--navy-900);"><i class="fa-solid fa-flask"></i></div>
+              <div class="edu-icon edu-icon-navy"><i class="fa-solid fa-flask"></i></div>
               <div>
                 <div class="edu-degree">화학공학 · 환경공학 (복수전공 학사)</div>
                 <div class="edu-school">경희대학교 (Kyung Hee University)</div>
@@ -193,7 +235,7 @@
 
         <!-- Career Timeline -->
         <div class="profile-right">
-          <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--navy-900); margin-bottom: 1.5rem;">
+          <h3 class="profile-col-title">
             <i class="fa-solid fa-timeline text-primary"></i> 사역 이력 (Career Timeline)
           </h3>
 
@@ -210,10 +252,10 @@
               <span class="timeline-date">2023 - 2026</span>
               <div class="timeline-title">해외연수 & 학위 수료</div>
               <div class="timeline-desc">IGSL 변혁적 리더십 석사(MATL) 수료 및 현지 선교 연수</div>
-              <div class="timeline-sub-desc" style="font-size: 0.85rem; color: var(--navy-900); font-weight: 600; margin-top: 0.25rem;">
+              <div class="timeline-sub-desc">
                 <i class="fa-solid fa-graduation-cap text-primary"></i> Midwestern Baptist Theological Seminary M.Div 졸업
               </div>
-              <div class="timeline-sub-desc" style="font-size: 0.85rem; color: var(--primary-600); font-weight: 600; margin-top: 0.2rem;">
+              <div class="timeline-sub-desc text-primary-sub">
                 <i class="fa-solid fa-church"></i> 마닐라 새생명교회 부교역자 사역 (2024 - 2025)
               </div>
             </div>
@@ -244,7 +286,7 @@
               <span class="timeline-date">2006 - 2008</span>
               <div class="timeline-title">수원CCC 캠퍼스 간사</div>
               <div class="timeline-desc">경기대 ACD, 성균관대 & 동남보건대 CD 간사 사역</div>
-              <div class="timeline-sub-desc" style="font-size: 0.85rem; color: var(--primary-600); font-weight: 600; margin-top: 0.25rem;">
+              <div class="timeline-sub-desc text-primary-sub">
                 <i class="fa-solid fa-church"></i> 수원성교회 청년부 사역자 (2007 - 2008)
               </div>
             </div>
@@ -272,8 +314,8 @@
 
       <div class="ministry-grid">
         <div class="ministry-card">
-          <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.25rem; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <img src="images/four_laws_evangelism.jpg" alt="필리핀 청년 대상 사영리(4영리) 전도 현장" style="width: 100%; height: 100%; object-fit: cover;">
+          <div class="ministry-img-wrap">
+            <img src="images/four_laws_evangelism.jpg" alt="필리핀 청년 대상 사영리(4영리) 전도 현장">
           </div>
           <div class="ministry-icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
           <h3 class="ministry-card-title">4영리 전도 (4 Laws)</h3>
@@ -283,10 +325,10 @@
         </div>
 
         <div class="ministry-card">
-          <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.25rem; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <img src="images/soon_discipleship.jpg" alt="필리핀 대학생 순모임 제자화 모임" style="width: 100%; height: 100%; object-fit: cover;">
+          <div class="ministry-img-wrap">
+            <img src="images/soon_discipleship.jpg" alt="필리핀 대학생 순모임 제자화 모임">
           </div>
-          <div class="ministry-icon-box" style="background: rgba(245, 158, 11, 0.1); color: var(--gold-600);"><i class="fa-solid fa-users"></i></div>
+          <div class="ministry-icon-box icon-gold"><i class="fa-solid fa-users"></i></div>
           <h3 class="ministry-card-title">순모임 제자화</h3>
           <p class="ministry-card-desc">
             순장과 순원이 삶을 나누고 말씀으로 세워지는 영적 소그룹 공동체를 통해 청년들을 주님의 성숙한 제자로 양육합니다.
@@ -294,10 +336,10 @@
         </div>
 
         <div class="ministry-card">
-          <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.25rem; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <img src="images/win_build_send.jpg" alt="전도 육성 파송 수련회 예배 현장" style="width: 100%; height: 100%; object-fit: cover;">
+          <div class="ministry-img-wrap">
+            <img src="images/win_build_send.jpg" alt="전도 육성 파송 수련회 예배 현장">
           </div>
-          <div class="ministry-icon-box" style="background: rgba(16, 185, 129, 0.1); color: var(--emerald-600);"><i class="fa-solid fa-seedling"></i></div>
+          <div class="ministry-icon-box icon-emerald"><i class="fa-solid fa-seedling"></i></div>
           <h3 class="ministry-card-title">전도 · 육성 · 파송</h3>
           <p class="ministry-card-desc">
             승법번식의 원리로 제자가 또 다른 제자를 세워 캠퍼스와 민족, 나아가 세계 복음화에 이바지하는 영적 운동을 가속화합니다.
@@ -305,10 +347,10 @@
         </div>
 
         <div class="ministry-card">
-          <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.25rem; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <img src="images/baguio_landscape.jpg" alt="필리핀 바기오 선교 현장 전경" style="width: 100%; height: 100%; object-fit: cover;">
+          <div class="ministry-img-wrap">
+            <img src="images/baguio_landscape.jpg" alt="필리핀 바기오 선교 현장 전경">
           </div>
-          <div class="ministry-icon-box" style="background: rgba(15, 23, 42, 0.1); color: var(--navy-900);"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="ministry-icon-box icon-navy"><i class="fa-solid fa-location-dot"></i></div>
           <h3 class="ministry-card-title">바기오 선교</h3>
           <p class="ministry-card-desc">
             교육의 도시 필리핀 바기오의 수많은 대학생들을 주님의 일꾼으로 일으켜, 동남아시아 및 아시아 복음화의 전초기지로 섬깁니다.
@@ -327,12 +369,14 @@
         <p class="section-subtitle">동아시아 선교, 졸업식, 파송식부터 필리핀 바기오까지 함께하신 은혜의 순간들입니다.</p>
       </div>
 
-      <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">전체보기</button>
-        <button class="filter-btn" data-filter="dispatch">파송 & 졸업</button>
-        <button class="filter-btn" data-filter="evangelism">전도 & 사역</button>
-        <button class="filter-btn" data-filter="training">리더십 & 훈련</button>
-        <button class="filter-btn" data-filter="family">가족 & 부부</button>
+      <div class="gallery-filters-scroll">
+        <div class="gallery-filters">
+          <button class="filter-btn active" data-filter="all">전체보기</button>
+          <button class="filter-btn" data-filter="dispatch">파송 & 졸업</button>
+          <button class="filter-btn" data-filter="evangelism">전도 & 사역</button>
+          <button class="filter-btn" data-filter="training">리더십 & 훈련</button>
+          <button class="filter-btn" data-filter="family">가족 & 부부</button>
+        </div>
       </div>
 
       <div class="gallery-grid" id="gallery-grid">
@@ -347,8 +391,8 @@
       <div class="prayer-section-header">
         <div class="prayer-header-left">
           <span class="section-tag"><i class="fa-solid fa-envelope"></i> Prayer Letters</span>
-          <h2 class="section-title" style="margin-bottom: 0.5rem;">선교 기도편지 모음</h2>
-          <p style="color: var(--slate-600);">바기오 현지 소식과 2026년 8월 최신 기도편지를 확인하시고 함께 기도로 동역해주세요.</p>
+          <h2 class="section-title">선교 기도편지 모음</h2>
+          <p class="section-desc">바기오 현지 소식과 2026년 8월 최신 기도편지를 확인하시고 함께 기도로 동역해주세요.</p>
         </div>
 
         <div class="prayer-header-actions">
@@ -361,46 +405,46 @@
 
       <div class="prayer-grid" id="prayer-grid">
         <!-- [PRIMARY FEATURED CARD] 2026 August Prayer Letter Card -->
-        <div class="prayer-card" style="border: 2.5px solid var(--primary-500); box-shadow: 0 12px 35px rgba(2, 132, 199, 0.22); grid-column: 1 / -1;">
-          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 0;">
-            <div class="prayer-img-wrap" style="height: 100%; min-height: 280px;">
-              <img src="images/baguio_landscape.jpg" alt="[2026.08] 2026년 8월 CCC 필리핀 바기오 사역 & 선교 기도편지" style="width: 100%; height: 100%; object-fit: cover;">
-              <span class="prayer-badge" style="background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; font-weight: 800; font-size: 0.85rem; padding: 6px 14px;">🚨 2026년 8월 최신 기도편지</span>
+        <div class="prayer-card featured-prayer-card">
+          <div class="featured-prayer-grid">
+            <div class="prayer-img-wrap featured-img-wrap">
+              <img src="images/baguio_landscape.jpg" alt="[2026.08] 2026년 8월 CCC 필리핀 바기오 사역 & 선교 기도편지">
+              <span class="prayer-badge badge-urgent">🚨 2026년 8월 최신 기도편지</span>
             </div>
-            <div class="prayer-card-body" style="padding: 2.25rem 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="prayer-card-body featured-card-body">
               <div>
-                <div class="prayer-date" style="color: var(--primary-600); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem;">
+                <div class="prayer-date featured-date">
                   <i class="fa-regular fa-calendar-check"></i> 2026년 8월 5일 발행
                 </div>
-                <h3 class="prayer-card-title" style="font-size: 1.55rem; font-weight: 800; color: var(--navy-900); margin-bottom: 1rem; line-height: 1.35;">
+                <h3 class="prayer-card-title featured-title">
                   [2026.08] 2026년 8월 CCC 필리핀 바기오 사역 & 선교 기도편지
                 </h3>
-                <p class="prayer-summary" style="font-size: 1.05rem; color: var(--slate-700); line-height: 1.7; margin-bottom: 1.5rem;">
+                <p class="prayer-summary featured-summary">
                   새 학기를 맞이한 필리핀 바기오 캠퍼스 개척 소식과 4영리 전도, 순모임 부흥, 그리고 아시아와 열방을 향해 헌신하는 청년 제자 육성을 위한 2026년 8월 노대영·신영화 선교사의 기도편지 소식입니다.
                 </p>
-                <div style="background: var(--primary-50); border: 1px solid var(--primary-100); padding: 1rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-                  <strong style="color: var(--primary-700); font-size: 0.9rem; display: block; margin-bottom: 0.4rem;">
+                <div class="prayer-box-highlight">
+                  <strong class="prayer-box-title">
                     <i class="fa-solid fa-hands-praying"></i> 8월 핵심 기도제목
                   </strong>
-                  <ul style="font-size: 0.9rem; color: var(--slate-700); margin-left: 1.2rem; line-height: 1.6;">
+                  <ul class="prayer-box-list">
                     <li>WIN BAGUIO TODAY, WIN THE WORLD TOMORROW! 바기오 대학생 복음화</li>
                     <li>새 학기 4영리 전도와 순모임을 통해 일어날 영적 부흥과 제자 육성을 위하여</li>
                   </ul>
                 </div>
               </div>
               
-              <div class="prayer-card-footer" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; justify-content: space-between; border-top: 1px solid var(--slate-200); padding-top: 1rem;">
-                <div style="display: flex; gap: 0.75rem;">
-                  <button class="btn-primary btn-read-detail" data-id="letter-2026-08" style="font-size: 0.95rem; padding: 0.75rem 1.5rem;">
+              <div class="prayer-card-footer featured-footer">
+                <div class="featured-btn-group">
+                  <button class="btn-primary btn-read-detail" data-id="letter-2026-08">
                     <i class="fa-solid fa-book-open"></i>
                     <span>기도편지 전체 읽기</span>
                   </button>
-                  <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.95rem; padding: 0.75rem 1.5rem; text-decoration: none; background: #03CF5D;">
+                  <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-naver-blog">
                     <i class="fa-solid fa-square-arrow-up-right"></i>
                     <span>네이버 블로그에서 보기</span>
                   </a>
                 </div>
-                <button class="btn-pray-count" data-id="letter-2026-08" style="padding: 0.6rem 1.25rem; font-size: 0.9rem;">
+                <button class="btn-pray-count" data-id="letter-2026-08">
                   <i class="fa-solid fa-heart"></i>
                   <span>아멘 함께 기도해요 (<span class="pray-num">84</span>명)</span>
                 </button>
@@ -413,14 +457,14 @@
         <div class="prayer-card">
           <div class="prayer-img-wrap">
             <img src="images/evangelism1.jpg" alt="[2026.03] 2026년 3월 CCC 선교 기도편지 소식">
-            <span class="prayer-badge" style="background: #03CF5D; color: #fff;">네이버 블로그 기도편지</span>
+            <span class="prayer-badge badge-blog">네이버 블로그 기도편지</span>
           </div>
           <div class="prayer-card-body">
             <div class="prayer-date"><i class="fa-regular fa-calendar"></i> 2026.03.15</div>
             <h3 class="prayer-card-title">[2026.03] 2026년 3월 CCC 선교 기도편지 소식</h3>
             <p class="prayer-summary">2026년 3월 노대영·신영화 선교사의 사역 이야기와 바기오 사역 비전, 기도제목이 담긴 네이버 블로그 기도편지 소식입니다.</p>
             <div class="prayer-card-footer">
-              <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-primary" style="font-size: 0.9rem; padding: 0.6rem 1.25rem; text-decoration: none; background: #03CF5D;">
+              <a href="https://m.blog.naver.com/jamsh15/224232410401" target="_blank" rel="noopener noreferrer" class="btn-naver-blog">
                 <i class="fa-solid fa-square-arrow-up-right"></i>
                 <span>2026년 3월 기도편지 열기</span>
               </a>
@@ -474,21 +518,21 @@
       <div class="text-center">
         <span class="section-tag"><i class="fa-solid fa-handshake-angle"></i> Mission Partnership</span>
         <h2 class="section-title">보내는 선교사가 되어주세요</h2>
-        <p class="section-subtitle" style="font-size: 1.25rem; font-weight: 700; color: var(--primary-600); margin-top: 0.5rem; margin-bottom: 2rem;">
+        <p class="section-subtitle support-subhead">
           기도와 후원으로 함께 하는 선교동역
         </p>
       </div>
 
       <!-- Banner Image for Sending Missionary -->
-      <div style="border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 3rem; box-shadow: var(--glass-shadow); position: relative; max-height: 380px;">
-        <img src="images/sending_missionary.jpg" alt="보내는 선교사가 되어주세요 - 기도와 후원으로 함께 하는 선교동역" style="width: 100%; height: 380px; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.75) 100%); display: flex; align-items: flex-end; padding: 2rem;">
-          <div style="color: #fff;">
-            <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-              <i class="fa-solid fa-heart-circle-plus text-primary" style="color: var(--gold-400);"></i>
+      <div class="support-banner-box">
+        <img src="images/sending_missionary.jpg" alt="보내는 선교사가 되어주세요 - 기도와 후원으로 함께 하는 선교동역">
+        <div class="support-banner-overlay">
+          <div class="support-banner-text">
+            <div class="support-banner-title">
+              <i class="fa-solid fa-heart-circle-plus"></i>
               "보내는 사람도, 가는 사람도 똑같이 함께 동역합니다"
             </div>
-            <p style="color: var(--slate-200); font-size: 1rem; max-width: 700px;">
+            <p class="support-banner-desc">
               필리핀 바기오 캠퍼스 복음화와 열방의 청년 리더를 세우는 사역에 기도의 파수꾼이자 재정 동역자로서 보내는 선교사가 되어주세요.
             </p>
           </div>
@@ -514,10 +558,10 @@
             </div>
 
             <div class="cms-box">
-              <h4 style="font-weight: 800; color: var(--navy-900); font-size: 1.1rem; margin-bottom: 0.5rem;">
+              <h4 class="cms-title">
                 <i class="fa-solid fa-globe text-primary"></i> CMS 정기후원 안내
               </h4>
-              <p style="font-size: 0.9rem; color: var(--slate-600);">
+              <p class="cms-desc">
                 한국CCC 공식 후원 사이트에서 정기후원으로 동역하실 수 있습니다.
               </p>
               
@@ -553,9 +597,9 @@
             </h3>
 
             <!-- Google Form Quick Banner -->
-            <div class="gform-banner-box" style="margin-bottom: 1.25rem;">
+            <div class="gform-banner-box">
               <div class="gform-banner-text">
-                <i class="fa-solid fa-square-poll-vertical" style="color: #673ab7; font-size: 1.2rem;"></i>
+                <i class="fa-solid fa-square-poll-vertical"></i>
                 <span>구글 폼(Google Forms) 수신 연동 지원</span>
               </div>
               <button class="btn-gform-open" id="btn-open-gform-support">
@@ -564,27 +608,27 @@
               </button>
             </div>
 
-            <p style="font-size: 0.9rem; color: var(--slate-600); margin-bottom: 1.25rem;">
+            <p class="form-help-text">
               바기오 사역과 선교사 가정을 위해 기도로 동역해주실 동역자님의 신청을 기다립니다. 아래 폼을 제출하시면 구글 폼 수신함으로 자동 전달됩니다.
             </p>
 
             <form id="prayer-commitment-form">
-              <div class="form-group" style="margin-bottom: 1rem;">
+              <div class="form-group">
                 <label for="commit-name">성함 / 성도님 이름</label>
                 <input type="text" id="commit-name" class="form-control" placeholder="홍길동" required>
               </div>
 
-              <div class="form-group" style="margin-bottom: 1rem;">
+              <div class="form-group">
                 <label for="commit-contact">연락처 / 이메일 (기도편지 발송용)</label>
                 <input type="text" id="commit-contact" class="form-control" placeholder="010-0000-0000 또는 email@example.com" required>
               </div>
 
-              <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div class="form-group mb-4">
                 <label for="commit-message">기도 약정 메시지 & 격려</label>
                 <textarea id="commit-message" class="form-control" placeholder="매일 아침 바기오 선교 사역을 위해 함께 기도하겠습니다!" required></textarea>
               </div>
 
-              <button type="submit" class="btn-primary" style="width: 100%;">
+              <button type="submit" class="btn-primary btn-full-width">
                 <i class="fa-solid fa-paper-plane"></i>
                 <span>기도 후원자로 제출하기 (구글 폼 연동)</span>
               </button>
@@ -605,15 +649,15 @@
       </div>
 
       <!-- Banner Image for Intercessory Prayer Thread -->
-      <div style="border-radius: var(--radius-lg); overflow: hidden; margin-top: 2rem; margin-bottom: 2rem; box-shadow: var(--glass-shadow); position: relative; max-height: 340px;">
-        <img src="images/intercessory_prayer.jpg" alt="동역자 중보기도의 끈 - 기도로 연합하는 사역동역자" style="width: 100%; height: 340px; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.7) 100%); display: flex; align-items: flex-end; padding: 2rem;">
-          <div style="color: #fff; width: 100%;">
-            <div style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
-              <i class="fa-solid fa-hands-praying text-primary" style="color: var(--gold-400);"></i>
+      <div class="guestbook-banner-box">
+        <img src="images/intercessory_prayer.jpg" alt="동역자 중보기도의 끈 - 기도로 연합하는 사역동역자">
+        <div class="guestbook-banner-overlay">
+          <div class="guestbook-banner-text">
+            <div class="guestbook-banner-title">
+              <i class="fa-solid fa-hands-praying"></i>
               "두세 사람이 내 이름으로 모인 곳에는 나도 그들 중에 있느니라" (마태복음 18:20)
             </div>
-            <p style="color: var(--slate-200); font-size: 0.95rem;">
+            <p class="guestbook-banner-desc">
               선교 현장과 동역자 삶의 기도제목을 주고받으며 거룩한 기도의 끈으로 하나 되는 중보기도 공간입니다.
             </p>
           </div>
@@ -621,27 +665,27 @@
       </div>
 
       <!-- GOOGLE FORMS DIRECT ACTION BANNER -->
-      <div class="gform-highlight-card" style="background: linear-gradient(135deg, #673ab7, #512da8); color: #fff; border-radius: var(--radius-md); padding: 1.75rem 2rem; margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem; box-shadow: 0 10px 25px rgba(103, 58, 183, 0.3);">
-        <div style="display: flex; align-items: center; gap: 1.25rem;">
-          <div style="width: 52px; height: 52px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: flex-center; justify-content: center; font-size: 1.6rem; color: #fff; flex-shrink: 0;">
-            <i class="fa-solid fa-file-pen" style="margin: auto;"></i>
+      <div class="gform-highlight-card">
+        <div class="gform-highlight-left">
+          <div class="gform-highlight-icon">
+            <i class="fa-solid fa-file-pen"></i>
           </div>
           <div>
-            <div style="font-weight: 800; font-size: 1.2rem; margin-bottom: 0.2rem;">
+            <div class="gform-highlight-title">
               구글 폼(Google Forms)으로 기도제목 직접 제출하기
             </div>
-            <div style="font-size: 0.925rem; opacity: 0.9; word-break: keep-all;">
+            <div class="gform-highlight-desc">
               선교사님의 공식 구글 폼 설문지로 이동하거나 팝업창에서 바로 기도제목을 입력하여 실시간 수신함으로 전달합니다.
             </div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <div class="gform-highlight-btns">
           <button class="btn-gform-white" id="btn-open-gform-modal">
             <i class="fa-solid fa-window-maximize"></i>
             <span>팝업으로 구글 폼 열기</span>
           </button>
-          <a id="link-gform-external" href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="btn-gform-outline" style="text-decoration: none;">
+          <a id="link-gform-external" href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="btn-gform-outline">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>새 창에서 구글 폼 작성</span>
           </a>
@@ -660,17 +704,15 @@
               <input type="text" id="guest-affiliation" class="form-control" placeholder="예: 경희CCC 동문, 수원성교회">
             </div>
           </div>
-          <div class="form-group" style="margin-bottom: 1.25rem;">
+          <div class="form-group mb-4">
             <label for="guest-msg-input"><i class="fa-solid fa-hands-praying text-primary"></i> 함께 나눌 기도제목 & 메시지</label>
             <textarea id="guest-msg-input" class="form-control" placeholder="선교사님께 함께 나눌 동역자님의 기도제목이나 응원 기도를 적어주세요. 작성 후 제출하시면 구글 폼 수신함으로 안전하게 저장됩니다!" required></textarea>
           </div>
 
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <button type="submit" class="btn-primary" style="flex: 1; justify-content: center; background: linear-gradient(135deg, var(--primary-500), var(--navy-900));">
-              <i class="fa-solid fa-paper-plane"></i>
-              <span>중보기도 제출 (구글 폼 백그라운드 전송)</span>
-            </button>
-          </div>
+          <button type="submit" class="btn-primary btn-full-width btn-navy-gradient">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>중보기도 제출 (구글 폼 백그라운드 전송)</span>
+          </button>
         </form>
 
         <div class="guestbook-list" id="guestbook-list">
@@ -685,9 +727,9 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-brand" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <img src="images/ccc_logo.jpg" alt="CCC Logo" style="height: 34px; background: #fff; padding: 3px 8px; border-radius: 6px;">
-            <span style="font-weight: 800; color: #fff;">노대영 · 신영화 선교사 사역지</span>
+          <div class="footer-brand">
+            <img src="images/ccc_logo.jpg" alt="CCC Logo" class="footer-logo">
+            <span class="footer-brand-title">노대영 · 신영화 선교사 사역지</span>
           </div>
           <p class="footer-desc">
             "오늘의 바기오 복음화는 내일의 아시아 복음화, 세계의 복음화!"<br>
@@ -708,10 +750,10 @@
 
         <div>
           <h4 class="footer-title">후원 정보</h4>
-          <p style="font-size: 0.85rem; color: var(--slate-400); margin-bottom: 0.5rem;">
+          <p class="footer-info-text">
             계좌: 우리은행 26712011018995 (노대영CCC)
           </p>
-          <p style="font-size: 0.85rem; color: var(--slate-400);">
+          <p class="footer-info-text">
             CMS: cs.kccc.org (간사번호 4708)
           </p>
         </div>
@@ -723,54 +765,70 @@
     </div>
   </footer>
 
+  <!-- Mobile Floating Action Bar (Smartphones) -->
+  <div class="mobile-fab-bar" id="mobile-fab-bar">
+    <a href="#support" class="fab-btn fab-support">
+      <i class="fa-solid fa-heart"></i>
+      <span>기도 후원</span>
+    </a>
+    <button class="fab-btn fab-gform" id="btn-fab-gform">
+      <i class="fa-solid fa-file-pen"></i>
+      <span>구글 폼</span>
+    </button>
+    <button class="fab-btn fab-top" id="btn-scroll-top" aria-label="맨 위로 이동">
+      <i class="fa-solid fa-arrow-up"></i>
+      <span>TOP</span>
+    </button>
+  </div>
+
   <!-- ================= MODALS ================= -->
 
-  <!-- 1. Google Forms Viewer Modal (구글 폼 모달 열기) -->
+  <!-- 1. Google Forms Viewer Modal -->
   <div class="modal-backdrop" id="modal-google-form">
-    <div class="modal-box" style="max-width: 860px; height: 90vh;">
-      <div class="modal-header" style="background: #673ab7; color: #fff;">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.4rem;"></i>
-          <h3 class="modal-title" style="color: #fff;">노대영 · 신영화 선교사 중보기도 구글 폼</h3>
+    <div class="modal-box modal-lg">
+      <div class="modal-header modal-header-purple">
+        <div class="modal-header-title-wrap">
+          <i class="fa-solid fa-square-poll-vertical"></i>
+          <h3 class="modal-title modal-title-white">노대영 · 신영화 선교사 중보기도 구글 폼</h3>
         </div>
-        <button class="btn-close-modal modal-close-trigger" style="color: #fff;"><i class="fa-solid fa-xmark"></i></button>
+        <button class="btn-close-modal modal-close-trigger btn-close-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body" style="padding: 0; display: flex; flex-direction: column; height: 100%;">
-        <div style="padding: 10px 16px; background: var(--slate-100); font-size: 0.85rem; color: var(--slate-700); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--slate-200);">
-          <span><i class="fa-solid fa-lock text-primary"></i> 보안이 연결된 구글 폼(Google Forms) 수신 창입니다.</span>
-          <a id="btn-gform-external-target" href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" style="color: #673ab7; font-weight: 700; text-decoration: none;">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> 새 창으로 크게 보기
+      <div class="modal-body modal-body-no-padding">
+        <div class="modal-gform-topbar">
+          <span><i class="fa-solid fa-lock text-primary"></i> 보안 연결된 구글 폼 수신 창입니다.</span>
+          <a id="btn-gform-external-target" href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="gform-external-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> 새 창으로 보기
           </a>
         </div>
-        <div style="flex: 1; position: relative;">
-          <iframe id="gform-iframe" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
+        <div class="iframe-container">
+          <iframe id="gform-iframe" src="about:blank"></iframe>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Google Form URL Setting Switcher Modal (선교사 전용 구글 폼 URL 변경 모달) -->
+  <!-- 2. Google Form URL Setting Switcher Modal -->
   <div class="modal-backdrop" id="modal-setting-gform">
-    <div class="modal-box" style="max-width: 540px;">
+    <div class="modal-box modal-md">
       <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <div class="modal-header-title-wrap">
           <i class="fa-solid fa-gear text-primary"></i>
           <h3 class="modal-title">선교사 구글 폼(Google Forms) URL 설정</h3>
         </div>
         <button class="btn-close-modal modal-close-trigger"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        <p style="font-size: 0.9rem; color: var(--slate-600); margin-bottom: 1.25rem;">
+        <p class="modal-help-text">
           선교사님의 공식 구글 폼 주소(`https://forms.gle/...` 또는 `https://docs.google.com/forms/.../viewform`)를 아래에 입력하시면 웹사이트의 모든 중보기도 버튼이 선교사님의 구글 폼으로 자동 연동됩니다!
         </p>
         <form id="gform-url-setting-form">
-          <div class="form-group" style="margin-bottom: 1.25rem;">
+          <div class="form-group mb-4">
             <label for="gform-url-input">구글 폼 URL (Form View Link)</label>
             <input type="url" id="gform-url-input" class="form-control" placeholder="https://docs.google.com/forms/d/e/1FAIpQLSc.../viewform" required>
           </div>
-          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <div class="modal-actions-right">
             <button type="button" class="btn-outline modal-close-trigger">취소</button>
-            <button type="submit" class="btn-primary" style="background: #673ab7;">
+            <button type="submit" class="btn-primary btn-bg-purple">
               <i class="fa-solid fa-floppy-disk"></i>
               <span>구글 폼 URL 변경 저장</span>
             </button>
@@ -782,49 +840,49 @@
 
   <!-- 3. Read Prayer Letter Detail Modal -->
   <div class="modal-backdrop" id="modal-read-letter">
-    <div class="modal-box" style="max-width: 780px;">
+    <div class="modal-box modal-lg">
       <div class="modal-header">
         <div>
-          <span id="read-letter-category" class="section-tag" style="margin-bottom: 0.2rem;">파송 소식</span>
+          <span id="read-letter-category" class="section-tag mb-1">파송 소식</span>
           <h3 class="modal-title" id="read-letter-title">기도편지 제목</h3>
         </div>
         <button class="btn-close-modal modal-close-trigger"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
-        <div style="font-size: 0.85rem; color: var(--slate-500); margin-bottom: 1.25rem;" id="read-letter-date">
+        <div class="modal-letter-date" id="read-letter-date">
           <i class="fa-regular fa-calendar"></i> 2026.08.05
         </div>
 
-        <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.5rem; max-height: 320px;" id="read-letter-cover-wrap">
-          <img src="" id="read-letter-cover" alt="Cover" style="width: 100%; height: 100%; object-fit: cover;">
+        <div class="modal-letter-cover-wrap" id="read-letter-cover-wrap">
+          <img src="" id="read-letter-cover" alt="Cover">
         </div>
 
-        <div id="read-letter-body" style="font-size: 1rem; color: var(--slate-800); line-height: 1.7; white-space: pre-line; margin-bottom: 2rem;">
+        <div id="read-letter-body" class="modal-letter-text">
           본문 내용...
         </div>
 
         <!-- Prayer Points Box -->
-        <div style="background: var(--primary-50); border: 1px solid var(--primary-100); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.75rem;">
-          <h4 style="font-weight: 800; color: var(--primary-700); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        <div class="modal-prayer-points-box">
+          <h4 class="modal-prayer-points-title">
             <i class="fa-solid fa-hands-praying"></i> 함께 기도해주세요 (Prayer Requests)
           </h4>
-          <ul id="read-letter-requests" style="list-style: none;">
+          <ul id="read-letter-requests" class="modal-prayer-points-list">
             <!-- Rendered list -->
           </ul>
         </div>
 
         <!-- Read Modal Actions -->
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--slate-200);">
-          <button id="btn-detail-pray" class="btn-pray-count" style="padding: 0.6rem 1.25rem; font-size: 0.95rem;">
+        <div class="modal-letter-footer">
+          <button id="btn-detail-pray" class="btn-pray-count">
             <i class="fa-solid fa-heart"></i>
             <span>아멘 함께 기도해요 (<span id="detail-pray-count-val">0</span>명)</span>
           </button>
 
-          <div style="display: flex; gap: 0.5rem;">
-            <a id="btn-external-blog" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem; text-decoration: none; background: #03CF5D;">
+          <div class="modal-letter-btns">
+            <a id="btn-external-blog" href="#" target="_blank" rel="noopener noreferrer" class="btn-naver-blog">
               <i class="fa-solid fa-square-arrow-up-right"></i> 블로그에서 보기
             </a>
-            <button id="btn-share-detail" class="btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+            <button id="btn-share-detail" class="btn-outline">
               <i class="fa-solid fa-share-nodes"></i> 공유하기
             </button>
           </div>
@@ -833,10 +891,84 @@
     </div>
   </div>
 
-  <!-- Toast Container -->
+  <!-- 4. Photo Gallery Lightbox Modal -->
+  <div class="modal-backdrop" id="modal-gallery-lightbox">
+    <div class="modal-box modal-lg lightbox-box">
+      <div class="modal-header">
+        <div class="lightbox-header-text">
+          <span id="lightbox-category" class="section-tag">사역 갤러리</span>
+          <h3 class="modal-title" id="lightbox-title">사진 제목</h3>
+        </div>
+        <button class="btn-close-modal modal-close-trigger"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body lightbox-body">
+        <div class="lightbox-img-wrap">
+          <img src="" id="lightbox-img" alt="Gallery Lightbox Image">
+        </div>
+        <p class="lightbox-desc" id="lightbox-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Write New Prayer Letter Modal -->
+  <div class="modal-backdrop" id="modal-write-letter">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div class="modal-header-title-wrap">
+          <i class="fa-solid fa-pen-to-square text-primary"></i>
+          <h3 class="modal-title">새 선교 기도편지 작성</h3>
+        </div>
+        <button class="btn-close-modal modal-close-trigger"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="write-letter-form">
+          <div class="form-group">
+            <label for="write-title">기도편지 제목</label>
+            <input type="text" id="write-title" class="form-control" placeholder="[2026.09] 9월 사역 & 기도편지 소식" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="write-category">분류 카테고리</label>
+              <select id="write-category" class="form-control">
+                <option value="최신기도">최신기도</option>
+                <option value="파송소식">파송소식</option>
+                <option value="현지사역">현지사역</option>
+                <option value="감사소식">감사소식</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="write-blog-url">네이버 블로그 / 외부 URL (선택)</label>
+              <input type="url" id="write-blog-url" class="form-control" placeholder="https://m.blog.naver.com/...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="write-summary">요약문</label>
+            <input type="text" id="write-summary" class="form-control" placeholder="바기오 캠퍼스 개척 및 청년 4영리 전도 소식..." required>
+          </div>
+          <div class="form-group">
+            <label for="write-content">기도편지 상세 본문</label>
+            <textarea id="write-content" class="form-control" rows="5" placeholder="샬롬! 사랑하는 기도의 동역자 여러분..." required></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <label for="write-requests">핵심 기도제목 (줄바꿈 구분)</label>
+            <textarea id="write-requests" class="form-control" rows="3" placeholder="1. 바기오 청년들의 영적 부흥을 위하여&#10;2. 선교사 가원의 영육간 강건함을 위하여"></textarea>
+          </div>
+          <div class="modal-actions-right">
+            <button type="button" class="btn-outline modal-close-trigger">취소</button>
+            <button type="submit" class="btn-primary">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>기도편지 게시하기</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- App Javascript -->
+  <!-- App JavaScript Engine -->
   <script src="app.js"></script>
 </body>
 </html>

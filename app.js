@@ -1,10 +1,10 @@
 /* ==========================================================================
-   CCC 노대영 · 신영화 선교사 웹사이트 - JavaScript Engine & Google Forms Integrator
+   CCC 노대영 · 신영화 선교사 웹사이트 - JavaScript Engine & Mobile Controller
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- Google Forms Target URL State ---
+  // --- 1. Google Forms Target URL State & Updater ---
   const DEFAULT_GFORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc_sample_missionary_prayer_form/viewform';
   let googleFormUrl = localStorage.getItem('ccc_google_form_url') || DEFAULT_GFORM_URL;
 
@@ -20,7 +20,168 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateGFormLinks();
 
-  // --- Initial Data ---
+  // --- 2. Mobile Navigation Drawer Controller ---
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileDrawerClose = document.getElementById('mobile-drawer-close');
+  const mobileDrawerBackdrop = document.getElementById('mobile-drawer-backdrop');
+  const drawerLinks = document.querySelectorAll('.drawer-link');
+
+  function openMobileDrawer() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeMobileDrawer() {
+    if (mobileDrawer) {
+      mobileDrawer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (mobileToggle) mobileToggle.addEventListener('click', openMobileDrawer);
+  if (mobileDrawerClose) mobileDrawerClose.addEventListener('click', closeMobileDrawer);
+  if (mobileDrawerBackdrop) mobileDrawerBackdrop.addEventListener('click', closeMobileDrawer);
+
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileDrawer();
+    });
+  });
+
+  // --- 3. Dynamic Photo Gallery Engine & Lightbox Modal ---
+  const galleryData = [
+    {
+      id: 'gal-1',
+      title: '필리핀 바기오 산지 전경 & 캠퍼스',
+      category: 'dispatch',
+      categoryLabel: '파송 & 졸업',
+      image: 'images/baguio_landscape.jpg',
+      description: '교육의 도시 바기오(Baguio) 수많은 대학 청년 영혼들이 아시아와 열방을 향해 세워질 사역 현장입니다.'
+    },
+    {
+      id: 'gal-2',
+      title: '노대영 · 신영화 선교사 부부 프로필',
+      category: 'family',
+      categoryLabel: '가족 & 부부',
+      image: 'images/couple_profile.jpg',
+      description: '주님의 지상명령을 따라 필리핀 바기오 선교사로 달려가는 노대영 · 신영화 선교사 부부입니다.'
+    },
+    {
+      id: 'gal-3',
+      title: '필리핀 청년 대상 4영리 전도 현장',
+      category: 'evangelism',
+      categoryLabel: '전도 & 사역',
+      image: 'images/four_laws_evangelism.jpg',
+      description: '하나님의 사랑과 그리스도의 구원 계획을 전하며 복음으로 잃어버린 청년들을 일깨웁니다.'
+    },
+    {
+      id: 'gal-4',
+      title: '바기오 대학생 순모임 소그룹 제자화',
+      category: 'training',
+      categoryLabel: '리더십 & 훈련',
+      image: 'images/soon_discipleship.jpg',
+      description: '순장과 순원이 말씀을 나누며 승법번식의 영적 리더로 커가는 제자 육성의 장입니다.'
+    },
+    {
+      id: 'gal-5',
+      title: '전도 · 육성 · 파송 수련회 예배',
+      category: 'evangelism',
+      categoryLabel: '전도 & 사역',
+      image: 'images/win_build_send.jpg',
+      description: '예수의 꿈을 꾸며 열방으로 나아갈 것을 다짐하는 한국 및 필리핀 청년들의 뜨거운 찬양과 기도.'
+    },
+    {
+      id: 'gal-6',
+      title: '보내는 선교사와 함께하는 사역 동역',
+      category: 'dispatch',
+      categoryLabel: '파송 & 졸업',
+      image: 'images/sending_missionary.jpg',
+      description: '보내는 사람도, 가는 사람도 똑같이 함께 동역하며 주님의 은혜를 확장합니다.'
+    },
+    {
+      id: 'gal-7',
+      title: '동역자 중보기도의 끈 연합 모임',
+      category: 'evangelism',
+      categoryLabel: '전도 & 사역',
+      image: 'images/intercessory_prayer.jpg',
+      description: '사역 현장과 삶의 기도제목을 연합하여 함께 기도하는 기도의 파수꾼들.'
+    },
+    {
+      id: 'gal-8',
+      title: 'CCC 필리핀 바기오 선교사 파송식',
+      category: 'dispatch',
+      categoryLabel: '파송 & 졸업',
+      image: 'images/dispatch_ceremony.jpg',
+      description: '2026년 6월, 동역자들의 축복 속에서 바기오 파송 선교사로 첫 발을 내딛는 은혜의 순간.'
+    },
+    {
+      id: 'gal-9',
+      title: 'IGSL 변혁적 리더십(MATL) 학위 수료식',
+      category: 'dispatch',
+      categoryLabel: '파송 & 졸업',
+      image: 'images/igsl_graduation.jpg',
+      description: '아시아 20여 개국 현지 목회자 및 리더들과 함께 학위를 수료하며 선교 비전을 공고히 한 순간.'
+    }
+  ];
+
+  const galleryGrid = document.getElementById('gallery-grid');
+  const modalLightbox = document.getElementById('modal-gallery-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxCategory = document.getElementById('lightbox-category');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+
+  function renderGallery(filter = 'all') {
+    if (!galleryGrid) return;
+    const itemsToRender = filter === 'all' 
+      ? galleryData 
+      : galleryData.filter(item => item.category === filter);
+
+    galleryGrid.innerHTML = itemsToRender.map(item => `
+      <div class="gallery-item" data-id="${item.id}">
+        <div class="gallery-thumb-wrap">
+          <img src="${item.image}" alt="${item.title}" loading="lazy">
+        </div>
+        <div class="gallery-caption">
+          <div class="gallery-item-tag">${item.categoryLabel}</div>
+          <div class="gallery-item-title">${item.title}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach click triggers to open lightbox
+    document.querySelectorAll('.gallery-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-id');
+        const data = galleryData.find(g => g.id === id);
+        if (data && modalLightbox) {
+          lightboxImg.src = data.image;
+          lightboxTitle.textContent = data.title;
+          lightboxCategory.textContent = data.categoryLabel;
+          lightboxDesc.textContent = data.description;
+          modalLightbox.classList.add('active');
+        }
+      });
+    });
+  }
+
+  renderGallery('all');
+
+  // Filter Buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      const filterValue = e.currentTarget.getAttribute('data-filter');
+      renderGallery(filterValue);
+    });
+  });
+
+  // --- 4. Initial Prayer Letters & Guestbook State ---
   const defaultLetters = [
     {
       id: 'letter-2026-08',
@@ -102,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('ccc_noh_guestbook', JSON.stringify(guestbook));
   }
 
-  // --- Modal Helpers ---
+  // --- 5. Modal Helpers & Triggers ---
   const modalRead = document.getElementById('modal-read-letter');
   const modalWrite = document.getElementById('modal-write-letter');
   const modalGForm = document.getElementById('modal-google-form');
@@ -126,8 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const reqsList = document.getElementById('read-letter-requests');
     if (reqsList) {
-      reqsList.innerHTML = letter.requests.map((r) => `
-        <li style="margin-bottom: 0.6rem; font-size: 0.95rem; color: var(--slate-800); display: flex; align-items: flex-start; gap: 0.5rem;">
+      reqsList.innerHTML = (letter.requests || []).map((r) => `
+        <li style="margin-bottom: 0.6rem; font-size: 0.925rem; color: var(--slate-800); display: flex; align-items: flex-start; gap: 0.5rem;">
           <i class="fa-solid fa-check text-primary" style="margin-top: 4px;"></i>
           <span>${r}</span>
         </li>
@@ -137,13 +298,12 @@ document.addEventListener('DOMContentLoaded', () => {
     modalRead.classList.add('active');
   }
 
-  // Open Google Forms Modal
   function openGoogleFormsModal() {
     updateGFormLinks();
     if (modalGForm) modalGForm.classList.add('active');
   }
 
-  // Attach Google Forms Open Triggers
+  // Attach Google Form Triggers
   const btnHeroGForm = document.getElementById('btn-hero-gform');
   if (btnHeroGForm) btnHeroGForm.addEventListener('click', openGoogleFormsModal);
 
@@ -153,13 +313,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenGFormSupport = document.getElementById('btn-open-gform-support');
   if (btnOpenGFormSupport) btnOpenGFormSupport.addEventListener('click', openGoogleFormsModal);
 
+  const btnFabGform = document.getElementById('btn-fab-gform');
+  if (btnFabGform) btnFabGform.addEventListener('click', openGoogleFormsModal);
+
   // Settings Modal Triggers
   const btnGFormSettings = document.getElementById('btn-gform-settings');
-  if (btnGFormSettings && modalSettingGForm) {
-    btnGFormSettings.addEventListener('click', () => {
-      const input = document.getElementById('gform-url-input');
-      if (input) input.value = googleFormUrl;
-      modalSettingGForm.classList.add('active');
+  const btnGFormSettingsDrawer = document.getElementById('btn-gform-settings-drawer');
+
+  function openSettingsModal() {
+    const input = document.getElementById('gform-url-input');
+    if (input) input.value = googleFormUrl;
+    if (modalSettingGForm) modalSettingGForm.classList.add('active');
+  }
+
+  if (btnGFormSettings) btnGFormSettings.addEventListener('click', openSettingsModal);
+  if (btnGFormSettingsDrawer) {
+    btnGFormSettingsDrawer.addEventListener('click', () => {
+      closeMobileDrawer();
+      openSettingsModal();
     });
   }
 
@@ -179,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Attach Detail Buttons
+  // Attach Read Detail Buttons
   document.querySelectorAll('.btn-read-detail').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-id');
@@ -202,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Write Letter Button
+  // Write Letter Button & Submit Form
   const btnWriteHeader = document.getElementById('btn-write-letter-header');
   if (btnWriteHeader && modalWrite) {
     btnWriteHeader.addEventListener('click', () => {
@@ -210,7 +381,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close Modals
+  const writeLetterForm = document.getElementById('write-letter-form');
+  if (writeLetterForm) {
+    writeLetterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('write-title').value;
+      const category = document.getElementById('write-category').value;
+      const blogUrl = document.getElementById('write-blog-url').value;
+      const summary = document.getElementById('write-summary').value;
+      const content = document.getElementById('write-content').value;
+      const requestsRaw = document.getElementById('write-requests').value;
+      const requests = requestsRaw ? requestsRaw.split('\n').filter(r => r.trim() !== '') : [];
+
+      const today = new Date();
+      const dateStr = today.toISOString().split('T')[0];
+      const displayDateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+      const newLetter = {
+        id: `letter-${Date.now()}`,
+        title,
+        date: dateStr,
+        displayDate: displayDateStr,
+        category,
+        summary,
+        image: 'images/baguio_landscape.jpg',
+        blogUrl: blogUrl || 'https://m.blog.naver.com/jamsh15/224232410401',
+        content,
+        requests,
+        prayCount: 1
+      };
+
+      letters.unshift(newLetter);
+      saveLetters();
+      writeLetterForm.reset();
+      if (modalWrite) modalWrite.classList.remove('active');
+      showToast('새 기도편지가 작성 및 저장되었습니다!');
+    });
+  }
+
+  // Close Modals Triggers
   document.querySelectorAll('.modal-close-trigger').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
@@ -228,9 +437,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnShareDetail) {
     btnShareDetail.addEventListener('click', () => {
       const shareUrl = window.location.href;
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        showToast('기도편지 웹사이트 링크가 복사되었습니다!');
-      });
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('기도편지 웹사이트 링크가 복사되었습니다!');
+        });
+      } else {
+        showToast('기도편지 웹사이트: ' + shareUrl);
+      }
     });
   }
 
@@ -238,20 +451,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCopyAcc = document.getElementById('btn-copy-account');
   if (btnCopyAcc) {
     btnCopyAcc.addEventListener('click', () => {
-      navigator.clipboard.writeText('우리은행 26712011018995 노대영CCC').then(() => {
-        showToast('후원 계좌번호가 복사되었습니다!');
-      });
+      const textToCopy = '우리은행 26712011018995 노대영CCC';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast('후원 계좌번호가 복사되었습니다!');
+        });
+      } else {
+        showToast('계좌번호: 우리은행 26712011018995');
+      }
     });
   }
 
-  // Guestbook Render & Submit (Google Form & Local Hybrid)
+  // --- 6. Guestbook Render & Submit ---
   const guestbookList = document.getElementById('guestbook-list');
   const guestbookForm = document.getElementById('guestbook-form');
 
   function renderGuestbook() {
     if (!guestbookList) return;
     guestbookList.innerHTML = guestbook.map(g => `
-      <div style="background: #fff; border: 1px solid var(--slate-200); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+      <div style="background: #fff; border: 1px solid var(--slate-200); padding: 1.25rem; border-radius: var(--radius-md); box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
           <strong style="color: var(--navy-900); font-size: 0.95rem;">${g.name} <small style="color: var(--slate-500); font-weight: normal;">(${g.affiliation || '동역자'})</small></strong>
           <span style="font-size: 0.75rem; color: var(--slate-400);">${g.time}</span>
@@ -296,6 +514,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- 7. Mobile Top Scroll Button ---
+  const btnScrollTop = document.getElementById('btn-scroll-top');
+  if (btnScrollTop) {
+    btnScrollTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Active Nav Link Highlight on Scroll
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset;
+    sections.forEach(current => {
+      const sectionHeight = current.offsetHeight;
+      const sectionTop = current.offsetTop - 120;
+      const sectionId = current.getAttribute('id');
+      
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+        document.querySelectorAll('.drawer-link').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+
   // Helper: Toast Notification
   function showToast(msg) {
     const container = document.getElementById('toast-container');
@@ -303,24 +555,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.style.cssText = `
-      background: var(--navy-900);
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: var(--radius-md);
-      box-shadow: var(--glass-shadow);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      animation: slideIn 0.3s ease;
-      z-index: 9999;
-    `;
     toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: var(--gold-400);"></i> ${msg}`;
 
     container.appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
       setTimeout(() => toast.remove(), 300);
     }, 3200);
   }
