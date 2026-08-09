@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    CCC 노대영 · 신영화 선교사 사역 웹사이트 - App JavaScript (Cloud Sync & Admin Dashboard)
    ========================================================================== */
 
@@ -49,6 +49,25 @@ window.addEventListener('hashchange', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Image Helper & Fallback Handler ---
+  window.getImageSrc = function(path) {
+    if (!path) return '';
+    if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://')) return path;
+    if (window.IMAGE_DATA && window.IMAGE_DATA[path]) {
+      return window.IMAGE_DATA[path];
+    }
+    return path;
+  };
+
+  document.addEventListener('error', function(e) {
+    if (e.target && e.target.tagName === 'IMG') {
+      var src = e.target.getAttribute('src');
+      if (src && window.IMAGE_DATA && window.IMAGE_DATA[src] && e.target.src !== window.IMAGE_DATA[src]) {
+        e.target.src = window.IMAGE_DATA[src];
+      }
+    }
+  }, true);
+
 
   const CLOUD_DB_URL = 'https://jsonblob.com/api/jsonBlob/019fe59c-a71a-7d39-9fbf-49c0c54ced9c';
 
@@ -639,7 +658,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="prayer-img-wrap" style="position: relative;">
           ${adminControls}
-          <img src="${letter.cover || 'images/dispatch_ceremony.jpg'}" alt="${letter.title}">
+          <img src="${window.getImageSrc(letter.cover || 'images/dispatch_ceremony.jpg')}" alt="${letter.title}">
           <span class="prayer-badge">${letter.category}</span>
         </div>
         <div class="prayer-card-body">
@@ -814,7 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (readLetterDate) readLetterDate.innerHTML = `<i class="fa-regular fa-calendar"></i> ${letter.date}`;
 
     if (letter.cover) {
-      if (readLetterCover) readLetterCover.src = letter.cover;
+      if (readLetterCover) readLetterCover.src = window.getImageSrc(letter.cover);
       if (readLetterCoverWrap) readLetterCoverWrap.style.display = 'block';
     } else {
       if (readLetterCoverWrap) readLetterCoverWrap.style.display = 'none';
