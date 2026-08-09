@@ -55,9 +55,27 @@
         <li><a href="https://gloryhaim0825.github.io/prayer-letter-2026-8/" target="_blank" rel="noopener noreferrer" class="nav-link" style="color: #0284C7; font-weight: 700; display: inline-flex; align-items: center; gap: 0.3rem;"><i class="fa-solid fa-paper-plane"></i> 8월 기도편지 ↗</a></li>
         <li><a href="#support" class="nav-link">후원 안내</a></li>
         <li><a href="#guestbook" class="nav-link">중보기도의 끈</a></li>
+        <li style="border-top: 1px solid var(--slate-200); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <button class="btn-admin-trigger-el" type="button" style="background: var(--navy-900); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%;">
+            <i class="fa-solid fa-user-lock"></i>
+            <span class="admin-status-text">선교사 로그인</span>
+          </button>
+          <button class="btn-admin-dash-el" type="button" style="display: none; background: linear-gradient(135deg, #0284C7, #0369A1); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 700; cursor: pointer; align-items: center; justify-content: center; gap: 0.4rem; width: 100%;">
+            <i class="fa-solid fa-clipboard-list" style="color: var(--gold-400);"></i>
+            <span>기도제목 관리함</span>
+          </button>
+        </li>
       </ul>
 
       <div class="nav-actions">
+        <button id="btn-admin-trigger" class="btn-admin-trigger-el" type="button" style="background: #ffffff; border: 1.5px solid var(--navy-900); color: var(--navy-900); padding: 0.45rem 0.9rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: all 0.2s ease;">
+          <i class="fa-solid fa-user-lock text-primary"></i>
+          <span class="admin-status-text">선교사 로그인</span>
+        </button>
+        <button id="btn-admin-dash" class="btn-admin-dash-el" type="button" style="display: none; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 0.45rem 0.9rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700; cursor: pointer; align-items: center; gap: 0.35rem; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+          <i class="fa-solid fa-clipboard-list" style="color: var(--gold-400);"></i>
+          <span>기도제목 관리함</span>
+        </button>
         <a href="#support" class="btn-cta">
           <i class="fa-solid fa-hand-holding-heart"></i>
           <span>기도 후원하기</span>
@@ -494,13 +512,23 @@
               <span>보내는 선교사 후원 계좌</span>
             </h3>
 
-            <div class="account-box">
-              <div class="account-bank">우리은행 (Woori Bank)</div>
-              <div class="account-number" id="account-num-text">26712011018995</div>
+            <div class="account-box" id="account-box-card" title="클릭/터치하여 계좌번호 복사">
+              <div class="account-top-bar">
+                <div class="account-bank"><i class="fa-solid fa-building-columns"></i> 우리은행 (Woori Bank)</div>
+                <span class="account-touch-badge"><i class="fa-solid fa-hand-pointer"></i> 터치하여 복사</span>
+              </div>
+              <div class="account-number" id="account-num-text" title="선택 또는 터치하여 복사">26712011018995</div>
               <div class="account-holder">예금주: 노대영CCC</div>
-              <button class="btn-copy-account" id="btn-copy-account">
-                <i class="fa-solid fa-copy"></i> 계좌 복사
-              </button>
+
+              <div class="account-btn-group">
+                <button class="btn-copy-account" id="btn-copy-account" type="button">
+                  <i class="fa-solid fa-copy"></i> 계좌번호 복사
+                </button>
+                <button class="btn-copy-full-account" id="btn-copy-full-account" type="button">
+                  <i class="fa-solid fa-clipboard-check"></i> 전체정보 복사
+                </button>
+              </div>
+              <p class="account-tip-msg"><i class="fa-solid fa-circle-info"></i> 스마트폰 카카오톡/브라우저에서도 터치 한 번으로 복사됩니다.</p>
             </div>
 
             <div class="cms-box">
@@ -655,9 +683,17 @@
 
         <div>
           <h4 class="footer-title">후원 정보</h4>
-          <p style="font-size: 0.85rem; color: var(--slate-400); margin-bottom: 0.5rem;">
-            계좌: 우리은행 26712011018995 (노대영CCC)
-          </p>
+          <div class="footer-account-box" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 0.75rem;">
+            <div style="font-size: 0.825rem; color: var(--gold-400); font-weight: 700; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.35rem;">
+              <i class="fa-solid fa-piggy-bank"></i> 우리은행 계좌후원
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+              <span style="font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 0.95rem; letter-spacing: 0.5px; user-select: all; -webkit-user-select: all; cursor: pointer;" id="footer-account-num-text" title="클릭하여 계좌번호 복사">26712011018995 (노대영CCC)</span>
+              <button id="btn-footer-copy" type="button" style="background: var(--primary-500); color: #fff; border: none; padding: 0.35rem 0.75rem; border-radius: 9999px; font-size: 0.775rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.2s ease;">
+                <i class="fa-solid fa-copy"></i> 복사
+              </button>
+            </div>
+          </div>
           <p style="font-size: 0.85rem; color: var(--slate-400);">
             CMS: cs.kccc.org (간사번호 4708)
           </p>
@@ -695,6 +731,66 @@
             <span>선교사 관리자 인증 로그인</span>
           </button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1-B. Missionary Admin Dashboard Modal (선교사 전용 제출된 기도제목 & 약정 신청 관리함) -->
+  <div class="modal-backdrop" id="modal-admin-dashboard">
+    <div class="modal-box" style="max-width: 840px;">
+      <div class="modal-header" style="background: var(--navy-900); color: #fff; padding: 1.25rem 1.5rem; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+        <h3 class="modal-title" style="color: #fff; font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fa-solid fa-clipboard-list" style="color: var(--gold-400);"></i>
+          <span>선교사 전용 기도제목 & 약정 신청 관리함</span>
+        </h3>
+        <button class="btn-close-modal modal-close-trigger" style="color: #fff; background: none; border: none; font-size: 1.2rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.5rem;">
+        <!-- Dashboard Sub-Header / Refresh -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; background: var(--slate-100); padding: 0.85rem 1.25rem; border-radius: var(--radius-md);">
+          <div style="font-size: 0.9rem; color: var(--slate-700); font-weight: 600;">
+            <i class="fa-solid fa-cloud text-primary"></i> 실시간 클라우드 DB에 동기화된 동역자들의 제출 내역입니다.
+          </div>
+          <button id="btn-refresh-dashboard" class="btn-outline" type="button" style="font-size: 0.825rem; padding: 0.4rem 0.85rem; background: #fff; cursor: pointer;">
+            <i class="fa-solid fa-rotate"></i> <span>최신 목록 새로고침</span>
+          </button>
+        </div>
+
+        <!-- Dashboard Tabs -->
+        <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--slate-200); margin-bottom: 1.25rem;">
+          <button id="tab-btn-guestbook" class="dashboard-tab active" type="button" style="padding: 0.65rem 1.25rem; font-weight: 700; border: none; background: none; border-bottom: 3px solid var(--primary-500); color: var(--primary-600); cursor: pointer; font-size: 0.95rem;">
+            <i class="fa-solid fa-hands-praying"></i> 동역자 중보기도의 끈 (<span id="dash-guest-count">0</span>)
+          </button>
+          <button id="tab-btn-commitments" class="dashboard-tab" type="button" style="padding: 0.65rem 1.25rem; font-weight: 700; border: none; background: none; color: var(--slate-500); cursor: pointer; font-size: 0.95rem;">
+            <i class="fa-solid fa-hand-holding-heart"></i> 기도 후원자 약정 목록 (<span id="dash-commit-count">0</span>)
+          </button>
+        </div>
+
+        <!-- Tab Content 1: Guestbook Items -->
+        <div id="tab-content-guestbook" class="dashboard-tab-panel">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 0.75rem;">
+            <button id="btn-copy-all-guestbook" class="btn-outline" type="button" style="font-size: 0.825rem; padding: 0.35rem 0.75rem; cursor: pointer;">
+              <i class="fa-solid fa-copy"></i> 전체 중보기도제목 복사
+            </button>
+          </div>
+          <div id="dash-guestbook-list" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 420px; overflow-y: auto;">
+            <!-- Dynamic Guestbook items -->
+          </div>
+        </div>
+
+        <!-- Tab Content 2: Prayer Commitments -->
+        <div id="tab-content-commitments" class="dashboard-tab-panel" style="display: none;">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 0.75rem;">
+            <button id="btn-copy-all-commitments" class="btn-outline" type="button" style="font-size: 0.825rem; padding: 0.35rem 0.75rem; cursor: pointer;">
+              <i class="fa-solid fa-copy"></i> 전체 약정자 목록 복사
+            </button>
+          </div>
+          <div id="dash-commitments-list" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 420px; overflow-y: auto;">
+            <!-- Dynamic Commitment items -->
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
